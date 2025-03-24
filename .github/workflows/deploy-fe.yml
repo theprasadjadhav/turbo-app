@@ -28,7 +28,7 @@ jobs:
           bun run turbo run build --filter=web...     #... will build all its dependancies also
 
       - name: deploy to server
-        uses: appleboy.ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{secrets.HOST}}
           username: ${{secrets.USER}}
