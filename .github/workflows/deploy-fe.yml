@@ -19,7 +19,7 @@ jobs:
           bun-version: latest
 
       - name: install dependecies
-        run: bun install --frozen-lockfile
+        run: bun install 
 
       - name: build the project
         env:
