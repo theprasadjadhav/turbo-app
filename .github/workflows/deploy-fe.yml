@@ -19,13 +19,14 @@ jobs:
           bun-version: latest
 
       - name: install dependecies
-        run: rm -r /turbo-app/apps/backend /turbo-app/apps/ws && bun install 
+        run: bun install 
 
       - name: build the project
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
-          bun run turbo run build --filter=web...     #... will build all its dependancies also
+          cd apps/web
+          bun run build
 
       - name: deploy to server
         uses: appleboy/ssh-action@v1.2.0
