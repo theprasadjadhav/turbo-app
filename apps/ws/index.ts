@@ -1,5 +1,10 @@
 import { prismaClient } from '@repo/db';
 
+type todoType ={
+    title:string,
+    body:string,
+    status:boolean
+}
 
 Bun.serve({
     port: 3001,
@@ -19,12 +24,12 @@ Bun.serve({
                         body:req.body,
                         status:false,
                     }
-                }).then(todo =>{
+                }).then((todo:todoType | undefined )=>{
                     ws.send(JSON.stringify({message: "created todo",todo}))
                 })
             }else if(req.type === "get"){
                 prismaClient.todo.findMany()
-                .then(todos =>{
+                .then((todos:todoType | undefined )=>{
                     ws.send(JSON.stringify(todos))
                 })
             }
