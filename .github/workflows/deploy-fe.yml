@@ -59,6 +59,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
             context: .
+            file: "{context}/docker/Dockerfile.web"
             push: true
             cache-from: type=registry,ref=prasadev/turbo-web-app:buildcache                        #this will use cached image layers while building image
             cache-to: type=registry,ref=prasadev/turbo-web-app:buildcache,mode=max                #this will cache new layers (max means cache maximum layers)
