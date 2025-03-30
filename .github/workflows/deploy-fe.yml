@@ -63,6 +63,8 @@ jobs:
             push: true
             cache-from: type=registry,ref=prasadev/turbo-web-app:buildcache                        #this will use cached image layers while building image
             cache-to: type=registry,ref=prasadev/turbo-web-app:buildcache,mode=max                #this will cache new layers (max means cache maximum layers)
+            build-args: |
+              DATABASE_URL=${{secrets.DATABASE_URL}}
             tags: prasadev/turbo-web-app:latest   
 
       - name: deploy    
@@ -77,7 +79,6 @@ jobs:
             sudo docker rm web-app || true
             sudo docker run -d \
               -p 80:3001 \
-              -e DATABASE_URL="${{secrets.DATABASE_URL}}" \
               --name web-app \
               --restart unless-stopped \
               prasadev/turbo-web-app:latest
