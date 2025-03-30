@@ -79,7 +79,7 @@ jobs:
               -p 80:3001 \
               -e DATABASE_URL=${{secrets.DATABASE_URL}} \
               --name web-app \
-              --restart unless-stoped \
+              --restart unless-stopped \
               prasadev/turbo-web-app:latest
 
 
