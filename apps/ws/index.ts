@@ -24,12 +24,12 @@ Bun.serve({
                         body:req.body,
                         status:false,
                     }
-                }).then((todo:todoType | undefined )=>{
+                }).then((todo)=>{
                     ws.send(JSON.stringify({message: "created todo",todo}))
                 })
             }else if(req.type === "get"){
                 prismaClient.todo.findMany()
-                .then((todos:todoType | undefined )=>{
+                .then((todos)=>{
                     ws.send(JSON.stringify(todos))
                 })
             }
