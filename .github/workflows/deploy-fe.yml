@@ -12,21 +12,21 @@ jobs:
     steps:
 
 
-      - name: checkout repository
-        uses: actions/checkout@v4
+      # - name: checkout repository
+      #   uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
+      # - name: Setup Bun
+      #   uses: oven-sh/setup-bun@v1
+      #   with:
+      #     bun-version: latest
 
-      - name: install dependecies
-        run: bun install 
+      # - name: install dependecies
+      #   run: bun install 
 
-      - name: build the project
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: bun run build --filter=web
+      # - name: build the project
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      #   run: bun run build --filter=web
 
     #   - name: deploy to server
     #     uses: appleboy/ssh-action@v1.2.0
@@ -79,6 +79,7 @@ jobs:
             sudo docker rm web-app || true
             sudo docker run -d \
               -p 80:3001 \
+              --env DATABASE_URL="${{secrets.DATABASE_URL}}"
               --name web-app \
               --restart unless-stopped \
               prasadev/turbo-web-app:latest
