@@ -1,1 +1,3 @@
 node_modules
+/packages/db/.env
+/appps/web/node_modules

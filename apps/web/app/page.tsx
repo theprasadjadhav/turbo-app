@@ -1,16 +1,7 @@
-"use client"
-import { getTodos } from "./actions";
-import { useEffect, useState } from "react";
+import { prismaClient } from "@repo/db";
 
-export default function Home() {
-  const [todos,setTodos]= useState<TodosType[]>([])
-
-  useEffect(() => {
-    getTodos().then((todos) => {
-      console.log(todos);
-      setTodos(todos);
-    });
-  }, []);
+export default async function Home() {
+  const todos = await prismaClient.todo.findMany();
 
   return (
     <div>
@@ -24,10 +15,5 @@ export default function Home() {
   );
 }
 
-
-type TodosType= {
-  id: string;
-  title: string;
-  body: string;
-  status: boolean;
-}
+//this will force to do generate static page and it will be server side component
+export const dynamic = "force-dynamic"
