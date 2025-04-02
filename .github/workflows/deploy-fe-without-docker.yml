@@ -1,0 +1,51 @@
+name: deploy frontend
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-without-docker:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: install dependecies
+        run: bun install 
+
+      - name: build the project
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          echo "DATABASE_URL=$DATABASE_URL" >> app/web/.env     #for next to generate static pages which requires db connection
+          bun run build --filter=web
+
+      - name: deploy to server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USER}}
+          key: ${{secrets.SSH_KEY}}
+          script: |
+            cd ~/web-app
+            git pull origin main
+            rm -r /apps/backend /apps/ws
+            bun install
+            cd packages/db && bunx prisma generate && cd ../..
+            export DATABASE_URL=${{secrets.DATABASE_URL}}
+            echo "DATABASE_URL=$DATABASE_URL" >> app/web/.env
+            bun run build --filter=web
+            pm2 restart web-app --update-env || pm2 start "bun run start --filter=web" --name=web-app
+
+
+
+
+      

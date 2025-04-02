@@ -1,4 +1,4 @@
-name: deploy frontend
+name: deploy-with-docker
 
 on: 
   push:
@@ -6,45 +6,13 @@ on:
       - main
 
 jobs:
-  deploy-everything:
+  deploy-with-docker:
     runs-on: ubuntu-latest
 
     steps:
 
-
       - name: checkout repository
         uses: actions/checkout@v4
-
-      # - name: Setup Bun
-      #   uses: oven-sh/setup-bun@v1
-      #   with:
-      #     bun-version: latest
-
-      # - name: install dependecies
-      #   run: bun install 
-
-      # - name: build the project
-      #   env:
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      #   run: bun run build --filter=web
-
-    #   - name: deploy to server
-    #     uses: appleboy/ssh-action@v1.2.0
-    #     with:
-    #       host: ${{secrets.HOST}}
-    #       username: ${{secrets.USER}}
-    #       key: ${{secrets.SSH_KEY}}
-    #       script: |
-    #         cd ~/turbo-app-fe
-    #         git pull origin main
-    #         rm -r /apps/backend /apps/ws
-    #         cd packages/db && bunx prisma generate && cd ../..
-    #         bun install
-    #         cd app/web
-    #         bun run build
-    #         export DATABASE_URL=${{secrets.DATABASE_URL}}
-    #         pm2 restart turbo-app-fe --update-env || pm2 start "bun run start" --name=turbo-app-fe 
-
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
