@@ -7,7 +7,7 @@ type todoType ={
 }
 
 Bun.serve({
-    port: 3001,
+    port: 3002,
     fetch(req,server){
         if(server.upgrade(req)){
             return

@@ -15,5 +15,10 @@ export default async function Home() {
   );
 }
 
+//server side components without props are statically generated at build time to force then to not do so iuse below exports 
+
 //this will force to do generate static page and it will be server side component
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
+
+// This will auto revalidate the page every 15 seconds
+// export const revalidate = 15; 
