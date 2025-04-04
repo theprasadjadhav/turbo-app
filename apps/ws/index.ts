@@ -1,10 +1,5 @@
 import { prismaClient } from '@repo/db';
 
-type todoType ={
-    title:string,
-    body:string,
-    status:boolean
-}
 
 Bun.serve({
     port: 3002,
